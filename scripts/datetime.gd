@@ -5,6 +5,7 @@ const _MAX_MONTH := 12
 const _MONTHS := [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 const _LEAP_MONTHS := [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
+
 static func now() -> Dictionary:
 	var tm := OS.get_datetime()
 	var tz := OS.get_time_zone_info().name as int \
@@ -20,6 +21,7 @@ static func now() -> Dictionary:
 		"second":  tm.second,
 		"timezone": tz * sg,
 	}
+
 
 static func sum(value: int) -> Dictionary:
 	var date := OS.get_date()
@@ -55,6 +57,7 @@ static func sum(value: int) -> Dictionary:
 		"timezone": tz * sg,
 	}
 
+
 static func to_dict(timestamp: String) -> Dictionary:
 	var vec := timestamp.split("T")
 	var arr := vec[1].split("-") if vec[1].find("+") == -1 else vec[1].split("+")
@@ -73,6 +76,7 @@ static func to_dict(timestamp: String) -> Dictionary:
 		"timezone": tz * sg,
 	}
 
+
 static func to_str(timestamp: Dictionary) -> String:
 	var tz: int = timestamp["timezone"] if timestamp["timezone"] > 0 else timestamp["timezone"] * -1
 	var sn := "+" if timestamp["timezone"] > 0 else "-"
@@ -87,6 +91,7 @@ static func to_str(timestamp: Dictionary) -> String:
 		tz,
 	]
 
+
 static func total_seconds(timestamp: Dictionary) -> int:
 	var seconds := timestamp["second"] as int
 	seconds += int(timestamp["minute"]) * 60
@@ -99,8 +104,10 @@ static func total_seconds(timestamp: Dictionary) -> int:
 
 	return seconds
 
+
 static func is_leap_year(year: int) -> bool:
 	return year % 400 == 0 if year % 4 != 0 else year % 100 != 0
+
 
 static func is_after(current: Dictionary, future: Dictionary) -> bool:
 	if future["timezone"] != future["timezone"]:
@@ -126,6 +133,7 @@ static func is_after(current: Dictionary, future: Dictionary) -> bool:
 
 	return true
 
+
 static func is_before(current: Dictionary, future: Dictionary) -> bool:
 	if current["timezone"] != future["timezone"]:
 		return false
@@ -149,6 +157,7 @@ static func is_before(current: Dictionary, future: Dictionary) -> bool:
 		return false
 
 	return true
+
 
 static func interval(current: Dictionary, future: Dictionary) -> Dictionary:
 	var years := 0
